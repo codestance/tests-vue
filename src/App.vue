@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import RestaurantScreen from '@components/RestaurantScreen';
+import RestaurantScreen from '@/components/RestaurantScreen';
 export default {
   name: 'App',
   components: {RestaurantScreen},
