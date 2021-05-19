@@ -3,29 +3,17 @@ import {createLocalVue, mount} from '@vue/test-utils';
 import RestaurantList from '@/components/RestaurantList';
 
 describe('RestaurantList', () => {
+  const records = [
+    {id: 1, name: 'Salad Place'},
+    {id: 2, name: 'Pasta Place'},
+  ];
   const localVue = createLocalVue();
   localVue.use(Vuex);
-  it('loads restaurants on mount', () => {
-    const restaurantsModule = {
-      namespaced: true,
-      actions: {
-        load: jest.fn().mockName('load'),
-      },
-    };
-    const store = new Vuex.Store({
-      modules: {
-        restaurants: restaurantsModule,
-      },
-    });
-    mount(RestaurantList, {localVue, store});
-    expect(restaurantsModule.actions.load).toHaveBeenCalled();
-  });
-  it('displays the restaurants', () => {
-    const records = [
-      {id: 1, name: 'Salad Place'},
-      {id: 2, name: 'Pasta Place'},
-    ];
-    const restaurantsModule = {
+  let restaurantsModule;
+  let wrapper;
+
+  beforeEach(() => {
+    restaurantsModule = {
       namespaced: true,
       state: {records},
       actions: {
@@ -37,16 +25,17 @@ describe('RestaurantList', () => {
         restaurants: restaurantsModule,
       },
     });
-    const wrapper = mount(RestaurantList, {localVue, store});
-    const firstRestaurantName = wrapper
-      .findAll('[data-testid="restaurant"]')
-      .at(0)
-      .text();
-    expect(firstRestaurantName).toBe('Salad Place');
-    const secondRestaurantName = wrapper
-      .findAll('[data-testid="restaurant"')
-      .at(1)
-      .text();
-    expect(secondRestaurantName).toBe('Pasta Place');
+    wrapper = mount(RestaurantList, {localVue, store});
+  });
+
+  const findByTestId = (wrapper, testId, index) =>
+    wrapper.findAll(`[data-testid="${testId}"]`).at(index);
+
+  it('loads restaurants on mount', () => {
+    expect(restaurantsModule.actions.load).toHaveBeenCalled();
+  });
+  it('displays the restaurants', () => {
+    expect(findByTestId(wrapper, 'restaurant', 0).text()).toBe('Salad Place');
+    expect(findByTestId(wrapper, 'restaurant', 1).text()).toBe('Pasta Place');
   });
 });

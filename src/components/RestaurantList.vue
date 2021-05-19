@@ -1,6 +1,7 @@
 <template>
   <ul>
-    <li v-for="restaurant in restaurants"
+    <li
+      v-for="restaurant in restaurants"
       :key="restaurant.id"
       data-testid="restaurant"
     >
