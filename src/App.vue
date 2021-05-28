@@ -1,5 +1,14 @@
 <template>
-  <RestaurantScreen />
+  <v-app>
+    <v-app-bar color="primary" fixed app>
+      <v-toolbar-title>Tests vue</v-toolbar-title>
+    </v-app-bar>
+    <v-content>
+      <v-container>
+        <RestaurantScreen />
+      </v-container>
+    </v-content>
+  </v-app>
 </template>
 
 <script>

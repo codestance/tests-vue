@@ -1,12 +1,16 @@
+import Vue from 'vue';
+import Vuetify from 'vuetify';
 import Vuex from 'vuex';
 import {createLocalVue, mount} from '@vue/test-utils';
 import RestaurantList from '@/components/RestaurantList';
 
 describe('RestaurantList', () => {
+  Vue.use(Vuetify);
   const records = [
     {id: 1, name: 'Salad Place'},
     {id: 2, name: 'Pasta Place'},
   ];
+  const vuetify = new Vuetify();
   const localVue = createLocalVue();
   localVue.use(Vuex);
   let restaurantsModule;
@@ -25,7 +29,7 @@ describe('RestaurantList', () => {
         restaurants: restaurantsModule,
       },
     });
-    wrapper = mount(RestaurantList, {localVue, store});
+    wrapper = mount(RestaurantList, {localVue, store, vuetify});
   });
 
   const findByTestId = (wrapper, testId, index) =>
