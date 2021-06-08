@@ -72,20 +72,31 @@ describe('restaurants', () => {
       it('sets an error flag', () => {
         expect(store.state.restaurants.loadError).toEqual(true);
       });
+
+      it('clears the loading flag', () => {
+        expect(store.state.restaurants.loading).toEqual(false);
+      });
+
     });
 
     describe('while loading', () => {
-      it('sets a loading flag', () => {
+      let store;
+      beforeEach(() => {
         const api = {
           loadRestaurants: () => new Promise(() => {}),
         };
-        const store = new Vuex.Store({
+        store = new Vuex.Store({
           modules: {
-            restaurants: restaurants(api),
+            restaurants: restaurants(api, {loadError: true}),
           },
         });
         store.dispatch('restaurants/load');
+      });
+      it('sets a loading flag', () => {
         expect(store.state.restaurants.loading).toEqual(true);
+      });
+      it('clears the error flag', () => {
+        expect(store.state.restaurants.loadError).toEqual(false);
       });
     });
   });
