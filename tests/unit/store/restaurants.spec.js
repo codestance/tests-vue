@@ -76,7 +76,6 @@ describe('restaurants', () => {
       it('clears the loading flag', () => {
         expect(store.state.restaurants.loading).toEqual(false);
       });
-
     });
 
     describe('while loading', () => {
