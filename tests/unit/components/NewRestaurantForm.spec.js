@@ -54,6 +54,12 @@ describe('NewRestaurantForm', () => {
         restaurantName,
       );
     });
+
+    it('clears the name', () => {
+      expect(
+        wrapper.find('[data-testid="new-restaurant-name-field"]').element.value,
+      ).toEqual('');
+    });
   });
 
   afterEach(() => {
