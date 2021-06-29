@@ -7,6 +7,13 @@
     >
       Name is required
     </v-alert>
+    <v-alert
+      v-if="serverError"
+      type="error"
+      data-testid="new-restaurant-server-error"
+    >
+      The restaurant could not be saved. Please try again.
+    </v-alert>
     <v-text-field
       placeholder="Add Restaurant"
       filled
@@ -33,6 +40,7 @@ export default {
     return {
       name: '',
       validationError: false,
+      serverError: false,
     };
   },
   methods: {
@@ -42,9 +50,14 @@ export default {
     handleSave() {
       if (this.name) {
         this.validationError = false;
-        this.createRestaurant(this.name).then(() => {
-          this.name = '';
-        });
+        this.serverError = false;
+        this.createRestaurant(this.name)
+          .then(() => {
+            this.name = '';
+          })
+          .catch(() => {
+            this.serverError = true;
+          });
       } else {
         this.validationError = true;
       }
